@@ -505,13 +505,14 @@ function openModal(type) {
       <input    class="field" id="mName" placeholder="¿Qué regalo sugieres? *" onkeydown="if(event.key==='Enter')guestSuggest()"/>
       <input    class="field" id="mLink" placeholder="Link de referencia (opcional)"/>
       <textarea class="field" id="mNote" placeholder="Nota — talla, color, marca… (opcional)"></textarea>
+
   <div class="modal-row">
     <button class="btn-primary purple" onclick="guestSuggest()">Enviar sugerencia</button>
     <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
   </div>`;
 
-}
-document.getElementById(“overlay”).classList.remove(“hidden”);
+  }
+  document.getElementById(“overlay”).classList.remove(“hidden”);
 setTimeout(() => { const el = document.getElementById(“mName”); if(el) el.focus(); }, 50);
 }
 
