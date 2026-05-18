@@ -146,6 +146,36 @@ textarea.field { resize:vertical; min-height:68px; }
 @keyframes slideUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
 
 .footer { text-align:center; margin-top:36px; font-size:.74rem; color:#d8b4fe; }
+
+  /* ── Mercado Pago banner ── */
+  .mp-banner {
+    margin: 28px auto 8px;
+    max-width: 520px;
+    background: linear-gradient(135deg, #fff0f6 0%, #f3e8ff 100%);
+    border: 2px solid #f9a8d4;
+    border-radius: 18px;
+    padding: 18px 22px;
+    text-align: center;
+  }
+  .mp-text {
+    font-size: .88rem;
+    color: #7c3aed;
+    margin: 0 0 10px;
+    line-height: 1.5;
+  }
+  .mp-link {
+    display: inline-block;
+    background: #009ee3;
+    color: #fff;
+    font-weight: 700;
+    font-size: .85rem;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    letter-spacing: .02em;
+    transition: opacity .2s;
+  }
+  .mp-link:hover { opacity: .85; }
 </style>
 
 </head>
@@ -213,6 +243,13 @@ textarea.field { resize:vertical; min-height:68px; }
   <div id="doneSection" style="display:none">
     <p class="done-title">Ya cubiertos ✅</p>
     <div id="doneList"></div>
+  </div>
+
+  <div class="mp-banner">
+    <p class="mp-text">💝 Quienes prefieran dar un regalo monetario en lugar de uno material pueden optar por nuestro link de pago:</p>
+    <a class="mp-link" href="https://link.mercadopago.com.ar/hectorlifter" target="_blank" rel="noreferrer">
+      💳 link.mercadopago.com.ar/hectorlifter
+    </a>
   </div>
 
   <p class="footer">Hecho con amor 💕 · Los cambios se guardan automáticamente</p>
@@ -391,7 +428,8 @@ function render() {
 }
 
 function renderLinkArea(item) {
-  if (editingLinkId === item.id) {
+  const isOwner = !!API_KEY;
+  if (isOwner && editingLinkId === item.id) {
     return `<span class="inline-link-form">
       <input id="linkInput-${item.id}" value="${esc(item.link||'')}" placeholder="https://…" onkeydown="handleLinkKey(event,'${item.id}')"/>
       <button class="btn-ok" onclick="saveLink('${item.id}')">OK</button>
@@ -402,9 +440,9 @@ function renderLinkArea(item) {
     const href = ensureHttp(item.link);
     const label = shortenUrl(item.link);
     return `<a class="link-chip" href="${href}" target="_blank" rel="noreferrer">🛍️ ${esc(label)}</a>
-            <button class="add-link-btn" onclick="startEditLink('${item.id}')">✏️</button>`;
+            ${isOwner ? `<button class="add-link-btn" onclick="startEditLink('${item.id}')">✏️</button>` : ''}`;
   }
-  return `<button class="add-link-btn" onclick="startEditLink('${item.id}')">+ link de compra</button>`;
+  return isOwner ? `<button class="add-link-btn" onclick="startEditLink('${item.id}')">+ link de compra</button>` : '';
 }
 
 function renderSuggestions() {
