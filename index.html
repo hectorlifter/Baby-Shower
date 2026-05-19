@@ -6,162 +6,140 @@
 <title>Lista Baby Shower ⚽</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   body {
-    min-height: 100vh;
-    background: linear-gradient(135deg,#e0f2fe 0%,#f0f9ff 50%,#dbeafe 100%);
-    font-family: 'Lato', sans-serif;
-    color: #1e3a5f;
-    position: relative;
-    overflow-x: hidden;
+    min-height:100vh;
+    background:linear-gradient(135deg,#e0f2fe 0%,#f0f9ff 50%,#dbeafe 100%);
+    font-family:'Lato',sans-serif;
+    color:#1e3a5f;
+    position:relative;
+    overflow-x:hidden;
   }
-  body::before, body::after {
-    content:''; position:fixed; border-radius:50%; pointer-events:none; z-index:0;
-  }
-  body::before { top:-80px; left:-80px; width:300px; height:300px; background:radial-gradient(circle,#bae6fd,transparent 70%); }
-  body::after  { bottom:-60px; right:-60px; width:260px; height:260px; background:radial-gradient(circle,#93c5fd,transparent 70%); }
+  body::before,body::after { content:'';position:fixed;border-radius:50%;pointer-events:none;z-index:0; }
+  body::before { top:-80px;left:-80px;width:300px;height:300px;background:radial-gradient(circle,#bae6fd,transparent 70%); }
+  body::after  { bottom:-60px;right:-60px;width:260px;height:260px;background:radial-gradient(circle,#93c5fd,transparent 70%); }
 
-  .container { max-width:640px; margin:0 auto; padding:32px 16px 80px; position:relative; z-index:1; }
+  .container { max-width:640px;margin:0 auto;padding:32px 16px 80px;position:relative;z-index:1; }
 
-  .header { text-align:center; margin-bottom:28px; }
-  .header .emoji-row { font-size:52px; margin-bottom:8px; }
-  .header h1 { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,5vw,2.4rem); color:#1d4ed8; letter-spacing:-0.5px; }
-  .header p  { margin-top:8px; color:#1e40af; font-size:.93rem; font-style:italic; line-height:1.5; }
-  .header p span { font-size:.8rem; color:#60a5fa; }
+  .header { text-align:center;margin-bottom:28px; }
+  .header .emoji-row { font-size:52px;margin-bottom:8px; }
+  .header h1 { font-family:'Playfair Display',serif;font-size:clamp(1.6rem,5vw,2.4rem);color:#1d4ed8;letter-spacing:-0.5px; }
+  .header p  { margin-top:8px;color:#1e40af;font-size:.93rem;font-style:italic;line-height:1.5; }
+  .header p span { font-size:.8rem;color:#60a5fa; }
 
-  .pbar-wrap { margin-top:18px; background:#bfdbfe; border-radius:999px; height:10px; overflow:hidden; }
-  .pbar-fill  { height:100%; background:linear-gradient(90deg,#3b82f6,#6366f1); border-radius:999px; transition:width .8s cubic-bezier(.4,0,.2,1); }
-  .pbar-label { margin-top:6px; font-size:.8rem; color:#1d4ed8; text-align:center; }
+  .pbar-wrap { margin-top:18px;background:#bfdbfe;border-radius:999px;height:10px;overflow:hidden; }
+  .pbar-fill  { height:100%;background:linear-gradient(90deg,#3b82f6,#6366f1);border-radius:999px;transition:width .8s cubic-bezier(.4,0,.2,1); }
+  .pbar-label { margin-top:6px;font-size:.8rem;color:#1d4ed8;text-align:center; }
 
-  .list { display:flex; flex-direction:column; gap:10px; }
+  .list { display:flex;flex-direction:column;gap:10px; }
   .card {
-    background:rgba(255,255,255,.9);
-    border-radius:16px; padding:14px 16px;
-    display:flex; align-items:center; gap:12px;
+    background:rgba(255,255,255,.9);border-radius:16px;padding:14px 16px;
+    display:flex;align-items:center;gap:12px;
     box-shadow:0 2px 12px rgba(29,78,216,.1);
     border:1.5px solid rgba(96,165,250,.3);
-    transition:box-shadow .2s, transform .15s;
+    transition:box-shadow .2s,transform .15s;
     animation:fadeIn .35s ease both;
   }
-  .card:hover { box-shadow:0 6px 24px rgba(0,0,0,.1); transform:translateY(-2px); }
-  .card-emoji { font-size:26px; flex-shrink:0; }
-  .card-body  { flex:1; min-width:0; }
-  .card-name  { font-weight:700; font-size:.97rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .card-meta  { display:flex; align-items:center; gap:6px; margin-top:5px; flex-wrap:wrap; }
-  .tag { display:inline-block; padding:2px 8px; border-radius:99px; font-size:.7rem; font-weight:700; background:#eff6ff; color:#1d4ed8; border:1px solid #93c5fd; }
-  .link-chip { display:inline-flex; align-items:center; gap:4px; background:#eff6ff; border:1.5px solid #60a5fa; border-radius:8px; padding:3px 9px; font-size:.73rem; color:#1d4ed8; text-decoration:none; transition:background .15s; }
+  .card:hover { box-shadow:0 6px 24px rgba(0,0,0,.1);transform:translateY(-2px); }
+  .card-emoji { font-size:26px;flex-shrink:0; }
+  .card-body  { flex:1;min-width:0; }
+  .card-name  { font-weight:700;font-size:.97rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+  .card-meta  { display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap; }
+  .tag { display:inline-block;padding:2px 8px;border-radius:99px;font-size:.7rem;font-weight:700;background:#eff6ff;color:#1d4ed8;border:1px solid #93c5fd; }
+  .link-chip { display:inline-flex;align-items:center;gap:4px;background:#eff6ff;border:1.5px solid #60a5fa;border-radius:8px;padding:3px 9px;font-size:.73rem;color:#1d4ed8;text-decoration:none;transition:background .15s; }
   .link-chip:hover { background:#dbeafe; }
-  .add-link-btn { background:none; border:1.5px dashed #93c5fd; border-radius:8px; padding:3px 9px; font-size:.73rem; color:#60a5fa; cursor:pointer; font-family:inherit; transition:border-color .15s,color .15s; }
-  .add-link-btn:hover { border-color:#3b82f6; color:#1d4ed8; }
-  .inline-link-form { display:flex; gap:4px; align-items:center; flex-wrap:wrap; }
-  .inline-link-form input { width:170px; padding:3px 8px; font-size:.76rem; border-radius:8px; border:1.5px solid #60a5fa; background:#f0f9ff; font-family:inherit; outline:none; }
-  .btn-ok     { background:#3b82f6; border:none; border-radius:7px; padding:4px 10px; color:white; font-size:.74rem; font-weight:700; cursor:pointer; font-family:inherit; }
-  .btn-cancel { background:#f3f4f6; border:none; border-radius:7px; padding:4px 9px; color:#6b7280; font-size:.74rem; cursor:pointer; font-family:inherit; }
+  .add-link-btn { background:none;border:1.5px dashed #93c5fd;border-radius:8px;padding:3px 9px;font-size:.73rem;color:#60a5fa;cursor:pointer;font-family:inherit;transition:border-color .15s,color .15s; }
+  .add-link-btn:hover { border-color:#3b82f6;color:#1d4ed8; }
+  .inline-link-form { display:flex;gap:4px;align-items:center;flex-wrap:wrap; }
+  .inline-link-form input { width:170px;padding:3px 8px;font-size:.76rem;border-radius:8px;border:1.5px solid #60a5fa;background:#f0f9ff;font-family:inherit;outline:none; }
+  .btn-ok     { background:#3b82f6;border:none;border-radius:7px;padding:4px 10px;color:white;font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit; }
+  .btn-cancel { background:#f3f4f6;border:none;border-radius:7px;padding:4px 9px;color:#6b7280;font-size:.74rem;cursor:pointer;font-family:inherit; }
 
   .btn-claim {
     background:linear-gradient(135deg,#60a5fa,#3b82f6);
-    border:none; border-radius:10px; padding:8px 13px;
-    color:#fff; font-weight:700; font-size:.8rem;
-    cursor:pointer; white-space:nowrap; flex-shrink:0;
-    font-family:inherit; transition:transform .15s;
+    border:none;border-radius:10px;padding:8px 13px;
+    color:#fff;font-weight:700;font-size:.8rem;
+    cursor:pointer;white-space:nowrap;flex-shrink:0;
+    font-family:inherit;transition:transform .15s;
   }
   .btn-claim:hover  { transform:scale(1.05); }
   .btn-claim:active { transform:scale(.97); }
 
-  .empty { text-align:center; padding:48px 0; color:#1d4ed8; }
+  .empty { text-align:center;padding:48px 0;color:#1d4ed8; }
   .empty .big { font-size:48px; }
 
-  .add-row { display:flex; gap:10px; margin-top:20px; }
-  .btn-add, .btn-suggest {
-    flex:1; background:transparent; border-radius:14px; padding:12px;
-    font-family:inherit; font-size:.87rem; cursor:pointer; transition:background .15s;
-  }
-  .btn-add     { border:2px dashed #93c5fd; color:#1d4ed8; }
-  .btn-suggest { border:2px dashed #a5b4fc; color:#4338ca; }
+  .add-row { display:flex;gap:10px;margin-top:20px; }
+  .btn-add,.btn-suggest { flex:1;background:transparent;border-radius:14px;padding:12px;font-family:inherit;font-size:.87rem;cursor:pointer;transition:background .15s; }
+  .btn-add     { border:2px dashed #93c5fd;color:#1d4ed8; }
+  .btn-suggest { border:2px dashed #a5b4fc;color:#4338ca; }
   .btn-add:hover     { background:rgba(147,197,253,.15); }
   .btn-suggest:hover { background:rgba(165,180,252,.15); }
 
-  .done-title { color:#93c5fd; font-size:.78rem; text-align:center; letter-spacing:2px; text-transform:uppercase; margin:32px 0 10px; }
-  .done-card {
-    background:rgba(255,255,255,.4); border-radius:12px; padding:10px 14px;
-    display:flex; align-items:center; gap:10px; opacity:.55; margin-bottom:6px;
-  }
-  .done-card .done-name { flex:1; text-decoration:line-through; color:#9ca3af; font-size:.88rem; }
-  .btn-remove { background:none; border:none; cursor:pointer; color:#93c5fd; font-size:13px; padding:2px 4px; }
+  .done-title { color:#93c5fd;font-size:.78rem;text-align:center;letter-spacing:2px;text-transform:uppercase;margin:32px 0 10px; }
+  .done-card { background:rgba(255,255,255,.4);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;opacity:.55;margin-bottom:6px; }
+  .done-card .done-name { flex:1;text-decoration:line-through;color:#9ca3af;font-size:.88rem; }
+  .btn-remove { background:none;border:none;cursor:pointer;color:#93c5fd;font-size:13px;padding:2px 4px; }
 
-  .sugg-panel { background:#eff6ff; border:2px solid #bfdbfe; border-radius:16px; padding:14px 16px; margin-bottom:20px; }
-  .sugg-title { font-weight:700; color:#1d4ed8; font-size:.88rem; margin-bottom:10px; }
-  .sugg-card  { background:white; border-radius:12px; padding:10px 12px; display:flex; align-items:flex-start; gap:10px; margin-bottom:8px; }
+  .sugg-panel { background:#eff6ff;border:2px solid #bfdbfe;border-radius:16px;padding:14px 16px;margin-bottom:20px; }
+  .sugg-title { font-weight:700;color:#1d4ed8;font-size:.88rem;margin-bottom:10px; }
+  .sugg-card  { background:white;border-radius:12px;padding:10px 12px;display:flex;align-items:flex-start;gap:10px;margin-bottom:8px; }
   .sugg-card:last-child { margin-bottom:0; }
-  .sugg-body  { flex:1; min-width:0; }
-  .sugg-name  { font-weight:700; font-size:.9rem; }
-  .sugg-note  { font-size:.75rem; color:#6b7280; font-style:italic; margin-top:2px; }
-  .sugg-actions { display:flex; gap:6px; flex-shrink:0; }
-  .btn-approve { background:#d1fae5; border:none; border-radius:8px; padding:5px 10px; color:#065f46; font-size:.78rem; font-weight:700; cursor:pointer; font-family:inherit; }
-  .btn-reject  { background:#fee2e2; border:none; border-radius:8px; padding:5px 10px; color:#991b1b; font-size:.78rem; font-weight:700; cursor:pointer; font-family:inherit; }
+  .sugg-body  { flex:1;min-width:0; }
+  .sugg-name  { font-weight:700;font-size:.9rem; }
+  .sugg-note  { font-size:.75rem;color:#6b7280;font-style:italic;margin-top:2px; }
+  .sugg-actions { display:flex;gap:6px;flex-shrink:0; }
+  .btn-approve { background:#d1fae5;border:none;border-radius:8px;padding:5px 10px;color:#065f46;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit; }
+  .btn-reject  { background:#fee2e2;border:none;border-radius:8px;padding:5px 10px;color:#991b1b;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit; }
 
-  .overlay { position:fixed; inset:0; background:rgba(0,0,0,.38); z-index:100; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .overlay { position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px; }
   .overlay.hidden { display:none; }
-  .modal { background:#fff; border-radius:20px; padding:28px 24px; width:100%; max-width:420px; animation:slideUp .25s ease; }
-  .modal h2 { font-family:'Playfair Display',serif; font-size:1.15rem; margin-bottom:4px; }
-  .modal .sub { font-size:.8rem; color:#9ca3af; margin-bottom:16px; }
-  .modal .field { width:100%; border:1.5px solid #93c5fd; border-radius:10px; padding:10px 12px; font-family:inherit; font-size:.9rem; outline:none; background:#f0f9ff; color:#1e3a5f; display:block; margin-bottom:10px; }
+  .modal { background:#fff;border-radius:20px;padding:28px 24px;width:100%;max-width:420px;animation:slideUp .25s ease; }
+  .modal h2 { font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:4px; }
+  .modal .sub { font-size:.8rem;color:#9ca3af;margin-bottom:16px; }
+  .modal .field { width:100%;border:1.5px solid #93c5fd;border-radius:10px;padding:10px 12px;font-family:inherit;font-size:.9rem;outline:none;background:#f0f9ff;color:#1e3a5f;display:block;margin-bottom:10px; }
   .modal .field:focus { border-color:#3b82f6; }
-  textarea.field { resize:vertical; min-height:68px; }
-  .modal-row { display:flex; gap:8px; margin-top:4px; }
-  .btn-primary { flex:1; background:linear-gradient(135deg,#3b82f6,#6366f1); border:none; border-radius:12px; padding:11px; color:white; font-weight:700; cursor:pointer; font-family:inherit; font-size:.9rem; }
-  .btn-primary.purple { background:linear-gradient(135deg,#6366f1,#818cf8); }
-  .btn-secondary { background:#f3f4f6; border:none; border-radius:12px; padding:11px 16px; color:#6b7280; cursor:pointer; font-family:inherit; }
+  textarea.field { resize:vertical;min-height:68px; }
+  .modal-row { display:flex;gap:8px;margin-top:4px; }
+  .btn-primary { flex:1;background:linear-gradient(135deg,#3b82f6,#6366f1);border:none;border-radius:12px;padding:11px;color:white;font-weight:700;cursor:pointer;font-family:inherit;font-size:.9rem; }
+  .btn-primary.indigo { background:linear-gradient(135deg,#6366f1,#818cf8); }
+  .btn-secondary { background:#f3f4f6;border:none;border-radius:12px;padding:11px 16px;color:#6b7280;cursor:pointer;font-family:inherit; }
 
-  .setup-banner { background:#fffbeb; border:2px solid #fde68a; border-radius:16px; padding:16px; margin-bottom:24px; font-size:.87rem; color:#92400e; line-height:1.6; }
+  .setup-banner { background:#fffbeb;border:2px solid #fde68a;border-radius:16px;padding:16px;margin-bottom:24px;font-size:.87rem;color:#92400e;line-height:1.6; }
   .setup-banner strong { color:#b45309; }
-  .setup-banner code { background:#fef3c7; padding:1px 5px; border-radius:4px; font-size:.82rem; }
-  .setup-input-row { display:flex; gap:8px; margin-top:10px; }
-  .setup-input-row input { flex:1; border:1.5px solid #fcd34d; border-radius:10px; padding:8px 12px; font-family:inherit; font-size:.87rem; outline:none; background:#fffdf0; }
+  .setup-input-row { display:flex;gap:8px;margin-top:10px; }
+  .setup-input-row input { flex:1;border:1.5px solid #fcd34d;border-radius:10px;padding:8px 12px;font-family:inherit;font-size:.87rem;outline:none;background:#fffdf0; }
   .setup-input-row input:focus { border-color:#f59e0b; }
-  .btn-save-key { background:#f59e0b; border:none; border-radius:10px; padding:8px 16px; color:white; font-weight:700; cursor:pointer; font-family:inherit; font-size:.85rem; }
+  .btn-save-key { background:#f59e0b;border:none;border-radius:10px;padding:8px 16px;color:white;font-weight:700;cursor:pointer;font-family:inherit;font-size:.85rem; }
 
-  .loading { text-align:center; padding:60px 0; font-size:36px; animation:spin 1.2s linear infinite; display:inline-block; }
+  .loading { text-align:center;padding:60px 0;font-size:36px;animation:spin 1.2s linear infinite;display:inline-block; }
   @keyframes spin { to { transform:rotate(360deg); } }
 
-  .confetti-piece { position:fixed; border-radius:2px; pointer-events:none; z-index:999; animation:fall 1.8s ease-out forwards; }
+  .confetti-piece { position:fixed;border-radius:2px;pointer-events:none;z-index:999;animation:fall 1.8s ease-out forwards; }
   @keyframes fall    { 0%{opacity:1;transform:translateY(0) rotate(0deg)} 100%{opacity:0;transform:translateY(130px) rotate(400deg)} }
   @keyframes fadeIn  { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
   @keyframes slideUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
 
-  /* ── Mercado Pago banner ── */
-  .mp-banner {
-    margin: 28px auto 8px;
-    max-width: 520px;
-    background: linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);
-    border: 2px solid #93c5fd;
-    border-radius: 18px;
-    padding: 18px 22px;
-    text-align: center;
-  }
-  .mp-text { font-size:.88rem; color:#1d4ed8; margin:0 0 10px; line-height:1.5; }
-  .mp-link {
-    display:inline-block; background:#009ee3; color:#fff;
-    font-weight:700; font-size:.85rem; padding:10px 20px;
-    border-radius:50px; text-decoration:none; letter-spacing:.02em; transition:opacity .2s;
-  }
+  .mp-banner { margin:28px auto 8px;max-width:520px;background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);border:2px solid #93c5fd;border-radius:18px;padding:18px 22px;text-align:center; }
+  .mp-text { font-size:.88rem;color:#1d4ed8;margin:0 0 10px;line-height:1.5; }
+  .mp-link { display:inline-block;background:#009ee3;color:#fff;font-weight:700;font-size:.85rem;padding:10px 20px;border-radius:50px;text-decoration:none;letter-spacing:.02em;transition:opacity .2s; }
   .mp-link:hover { opacity:.85; }
 
-  .footer { text-align:center; margin-top:36px; font-size:.74rem; color:#93c5fd; }
+  .footer { text-align:center;margin-top:36px;font-size:.74rem;color:#93c5fd; }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <div class="setup-banner" id="setupBanner">
-    <strong>⚙️ Configuración inicial (solo tú necesitas hacer esto una vez)</strong><br/>
+  <!-- Banner de configuracion (solo para el dueno) -->
+  <div class="setup-banner" id="setupBanner" style="display:none">
+    <strong>Configuracion inicial (solo vos necesitas hacer esto una vez)</strong><br/>
     Para que la lista se comparta con todos, necesitas una clave gratuita de JSONBin.io:<br/>
-    1. Ve a <a href="https://jsonbin.io" target="_blank"><strong>jsonbin.io</strong></a> → crea cuenta gratis (solo email)<br/>
-    2. En el panel, copia tu <strong>Master Key</strong> (en "API Keys")<br/>
-    3. Pégala aquí abajo y haz clic en "Guardar y conectar":
+    1. Ve a <a href="https://jsonbin.io" target="_blank"><strong>jsonbin.io</strong></a> - crea cuenta gratis<br/>
+    2. Copia tu <strong>Master Key</strong> (en "API Keys")<br/>
+    3. Pegala abajo y hace clic en "Guardar y conectar":
     <div class="setup-input-row">
-      <input type="text" id="apiKeyInput" placeholder="$2b$10$…tu master key de JSONBin…"/>
-      <button class="btn-save-key" onclick="saveApiKey()">Guardar y conectar →</button>
+      <input type="password" id="apiKeyInput" placeholder="Tu master key de JSONBin..."/>
+      <button class="btn-save-key" onclick="saveApiKey()">Guardar y conectar</button>
     </div>
   </div>
 
@@ -170,10 +148,10 @@
     <h1>Lista del Baby Shower</h1>
     <p>
       Toca <strong>"Lo compro yo 💙"</strong> para reservar un regalo.<br/>
-      <span>El artículo desaparecerá para que nadie más lo duplique.</span>
+      <span>El articulo desaparecera para que nadie mas lo duplique.</span>
     </p>
     <div class="pbar-wrap"><div class="pbar-fill" id="pbarFill" style="width:0%"></div></div>
-    <p class="pbar-label" id="pbarLabel">Cargando…</p>
+    <p class="pbar-label" id="pbarLabel">Cargando...</p>
   </div>
 
   <div id="suggPanel" style="display:none"></div>
@@ -186,20 +164,20 @@
 
   <div class="empty" id="emptyState" style="display:none">
     <div class="big">🎉</div>
-    <p style="font-weight:700;font-size:1.1rem;margin-top:8px">¡Todos los regalos están cubiertos!</p>
+    <p style="font-weight:700;font-size:1.1rem;margin-top:8px">Todos los regalos estan cubiertos!</p>
     <p style="font-size:.88rem;color:#1d4ed8;margin-top:4px">Gracias a todos por su amor 💙</p>
   </div>
 
   <div class="add-row" id="ownerButtons" style="display:none">
-    <button class="btn-add"     onclick="openModal('owner')">✏️ Agregar artículo</button>
-    <button class="btn-suggest" onclick="openModal('guest')">💡 Sugerir regalo</button>
+    <button class="btn-add"     onclick="openModal('owner')">Agregar articulo</button>
+    <button class="btn-suggest" onclick="openModal('guest')">Sugerir regalo</button>
   </div>
   <div class="add-row" id="guestButtons" style="display:none">
-    <button class="btn-suggest" style="flex:1" onclick="openModal('guest')">💡 Sugerir regalo</button>
+    <button class="btn-suggest" style="flex:1" onclick="openModal('guest')">Sugerir regalo</button>
   </div>
 
   <div id="doneSection" style="display:none">
-    <p class="done-title">Ya cubiertos ✅</p>
+    <p class="done-title">Ya cubiertos</p>
     <div id="doneList"></div>
   </div>
 
@@ -210,7 +188,7 @@
     </a>
   </div>
 
-  <p class="footer">Hecho con amor 💙 · Los cambios se guardan automáticamente</p>
+  <p class="footer">Hecho con amor 💙 · Los cambios se guardan automaticamente</p>
 </div>
 
 <div class="overlay hidden" id="overlay" onclick="handleOverlayClick(event)">
@@ -218,59 +196,49 @@
 </div>
 
 <script>
-const DEFAULT_ITEMS = [
+// ── Configuracion: pega aqui tu BIN_ID y API_KEY ──
+// Estos valores se cargan desde localStorage si ya fueron guardados.
+// Los invitados NO necesitan configurar nada - la pagina carga sola.
+
+var DEFAULT_ITEMS = [
   {id:"1",  name:"Coche/carriola",              emoji:"🛒", category:"Movilidad",  link:""},
   {id:"2",  name:"Silla de auto (infant)",       emoji:"🚗", category:"Movilidad",  link:""},
-  {id:"3",  name:"Cuna o moisés",               emoji:"🛏️", category:"Sueño",      link:""},
-  {id:"4",  name:"Monitor de bebé",             emoji:"📷", category:"Sueño",      link:""},
-  {id:"5",  name:"Ropa 0-3 meses",             emoji:"👶", category:"Ropa",       link:""},
-  {id:"6",  name:"Ropa 3-6 meses",             emoji:"👕", category:"Ropa",       link:""},
-  {id:"7",  name:"Pañales talla N",            emoji:"🍼", category:"Higiene",    link:""},
-  {id:"8",  name:"Pañales talla 1",            emoji:"🍼", category:"Higiene",    link:""},
-  {id:"9",  name:"Toallitas húmedas",          emoji:"🧻", category:"Higiene",    link:""},
-  {id:"10", name:"Bañera de bebé",             emoji:"🛁", category:"Higiene",    link:""},
-  {id:"11", name:"Termómetro digital",          emoji:"🌡️", category:"Salud",      link:""},
+  {id:"3",  name:"Cuna o moises",               emoji:"🛏️", category:"Sueno",      link:""},
+  {id:"4",  name:"Monitor de bebe",             emoji:"📷", category:"Sueno",      link:""},
+  {id:"5",  name:"Ropa 0-3 meses",              emoji:"👶", category:"Ropa",       link:""},
+  {id:"6",  name:"Ropa 3-6 meses",              emoji:"👕", category:"Ropa",       link:""},
+  {id:"7",  name:"Panales talla N",             emoji:"🍼", category:"Higiene",    link:""},
+  {id:"8",  name:"Panales talla 1",             emoji:"🍼", category:"Higiene",    link:""},
+  {id:"9",  name:"Toallitas humedas",           emoji:"🧻", category:"Higiene",    link:""},
+  {id:"10", name:"Bañera de bebe",              emoji:"🛁", category:"Higiene",    link:""},
+  {id:"11", name:"Termometro digital",          emoji:"🌡️", category:"Salud",      link:""},
   {id:"12", name:"Aspirador nasal",             emoji:"💊", category:"Salud",      link:""},
   {id:"13", name:"Cobijitas/mantitas",          emoji:"🧸", category:"Confort",    link:""},
   {id:"14", name:"Chupones/chupetes x3",        emoji:"🎀", category:"Confort",    link:""},
   {id:"15", name:"Hamaca o columpio",           emoji:"🪑", category:"Confort",    link:""},
-  {id:"16", name:"Bolsa pañalera",             emoji:"👜", category:"Accesorios", link:""},
-  {id:"17", name:"Portabebé/cargador",         emoji:"🤱", category:"Accesorios", link:""},
-  {id:"18", name:"Sacaleches eléctrico",       emoji:"🍼", category:"Lactancia",  link:""},
-  {id:"19", name:"Cojín de lactancia",         emoji:"🛋️", category:"Lactancia",  link:""},
-  {id:"20", name:"Mordillos / juguetes sens.", emoji:"🧸", category:"Juego",      link:""},
+  {id:"16", name:"Bolsa panialera",             emoji:"👜", category:"Accesorios", link:""},
+  {id:"17", name:"Portabebe/cargador",          emoji:"🤱", category:"Accesorios", link:""},
+  {id:"18", name:"Sacaleches electrico",        emoji:"🍼", category:"Lactancia",  link:""},
+  {id:"19", name:"Cojin de lactancia",          emoji:"🛋️", category:"Lactancia",  link:""},
+  {id:"20", name:"Mordillos / juguetes",        emoji:"🧸", category:"Juego",      link:""},
 ];
 
-let state = { items: [], claimed: {}, suggestions: [] };
-let BIN_ID   = localStorage.getItem("bs_bin_id")  || "";
-let API_KEY  = localStorage.getItem("bs_api_key") || "";
-let editingLinkId = null;
+var state = { items: [], claimed: {}, suggestions: [] };
+var BIN_ID  = localStorage.getItem("bs_bin_id")  || "";
+var API_KEY = localStorage.getItem("bs_api_key") || "";
+var editingLinkId = null;
 
 // ── JSONBin ──
 async function loadRemote() {
-  if (!API_KEY) return false;
+  if (!API_KEY || !BIN_ID) return false;
   try {
-    if (!BIN_ID) {
-      const res = await fetch("https://api.jsonbin.io/v3/b", {
-        method:"POST",
-        headers:{ "Content-Type":"application/json", "X-Master-Key":API_KEY, "X-Bin-Name":"baby-shower" },
-        body: JSON.stringify({ items: DEFAULT_ITEMS, claimed:{}, suggestions:[] })
-      });
-      const data = await res.json();
-      if (!data.metadata || !data.metadata.id) return false;
-      BIN_ID = data.metadata.id;
-      localStorage.setItem("bs_bin_id", BIN_ID);
-      state = data.record;
-      return true;
-    } else {
-      const res = await fetch("https://api.jsonbin.io/v3/b/" + BIN_ID + "/latest", {
-        headers:{ "X-Master-Key":API_KEY }
-      });
-      if (!res.ok) return false;
-      const data = await res.json();
-      state = data.record;
-      return true;
-    }
+    var res = await fetch("https://api.jsonbin.io/v3/b/" + BIN_ID + "/latest", {
+      headers: { "X-Master-Key": API_KEY }
+    });
+    if (!res.ok) return false;
+    var data = await res.json();
+    state = data.record;
+    return true;
   } catch(e) { return false; }
 }
 
@@ -278,43 +246,66 @@ async function saveRemote() {
   if (!API_KEY || !BIN_ID) return;
   try {
     await fetch("https://api.jsonbin.io/v3/b/" + BIN_ID, {
-      method:"PUT",
-      headers:{ "Content-Type":"application/json", "X-Master-Key":API_KEY },
+      method: "PUT",
+      headers: { "Content-Type": "application/json", "X-Master-Key": API_KEY },
       body: JSON.stringify(state)
     });
   } catch(e) {}
 }
 
-// ── Setup ──
+// ── Setup (solo dueno) ──
 async function saveApiKey() {
-  const val = document.getElementById("apiKeyInput").value.trim();
+  var val = document.getElementById("apiKeyInput").value.trim();
   if (!val) { alert("Por favor pega tu Master Key de JSONBin."); return; }
   API_KEY = val;
-  BIN_ID  = "";
+  BIN_ID = "";
   localStorage.setItem("bs_api_key", API_KEY);
   localStorage.removeItem("bs_bin_id");
   document.getElementById("setupBanner").style.display = "none";
   document.getElementById("loadingState").style.display = "block";
-  const ok = await loadRemote();
-  if (ok) render();
-  else {
-    alert("No se pudo conectar. Verifica que tu Master Key sea correcta.");
+  // Crear nuevo bin
+  try {
+    var res = await fetch("https://api.jsonbin.io/v3/b", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Master-Key": API_KEY, "X-Bin-Name": "baby-shower" },
+      body: JSON.stringify({ items: DEFAULT_ITEMS, claimed: {}, suggestions: [] })
+    });
+    var data = await res.json();
+    if (!data.metadata || !data.metadata.id) {
+      alert("No se pudo conectar. Verifica tu Master Key.");
+      document.getElementById("setupBanner").style.display = "block";
+      return;
+    }
+    BIN_ID = data.metadata.id;
+    localStorage.setItem("bs_bin_id", BIN_ID);
+    state = data.record;
+    render();
+  } catch(e) {
+    alert("Error de conexion. Verifica tu Master Key.");
     document.getElementById("setupBanner").style.display = "block";
   }
 }
 
 // ── Init ──
 window.addEventListener("DOMContentLoaded", async function() {
-  if (API_KEY) {
+  if (API_KEY && BIN_ID) {
+    // Usuario conocido (dueno o invitado que ya tiene datos en cache)
     document.getElementById("setupBanner").style.display = "none";
     var ok = await loadRemote();
-    if (ok) render();
-    else {
-      document.getElementById("loadingState").innerHTML = "<p style='color:#1d4ed8'>Error al cargar. Recarga la página.</p>";
+    if (ok) {
+      render();
+    } else {
+      document.getElementById("loadingState").innerHTML = "<p style='color:#1d4ed8;padding:20px'>Error al cargar. Recarga la pagina.</p>";
     }
-  } else {
+  } else if (API_KEY && !BIN_ID) {
+    // Tiene key pero no bin - mostrar setup
     document.getElementById("loadingState").style.display = "none";
-    state = { items: DEFAULT_ITEMS, claimed:{}, suggestions:[] };
+    document.getElementById("setupBanner").style.display = "block";
+  } else {
+    // Invitado sin configuracion - mostrar lista de demo
+    document.getElementById("loadingState").style.display = "none";
+    document.getElementById("setupBanner").style.display = "none";
+    state = { items: DEFAULT_ITEMS, claimed: {}, suggestions: [] };
     render();
   }
 });
@@ -323,20 +314,15 @@ window.addEventListener("DOMContentLoaded", async function() {
 function render() {
   document.getElementById("loadingState").style.display = "none";
 
-  // Show correct action buttons
-  if (API_KEY) {
-    document.getElementById("ownerButtons").style.display = "flex";
-    document.getElementById("guestButtons").style.display = "none";
-  } else {
-    document.getElementById("ownerButtons").style.display = "none";
-    document.getElementById("guestButtons").style.display = "flex";
-  }
+  var isOwner = !!(API_KEY && BIN_ID);
+  document.getElementById("ownerButtons").style.display = isOwner ? "flex" : "none";
+  document.getElementById("guestButtons").style.display = isOwner ? "none" : "flex";
 
-  var visible = state.items.filter(function(i){ return !state.claimed[i.id]; });
-  var done    = state.items.filter(function(i){ return  state.claimed[i.id]; });
+  var visible = state.items.filter(function(i) { return !state.claimed[i.id]; });
+  var done    = state.items.filter(function(i) { return  state.claimed[i.id]; });
   var pct     = state.items.length ? Math.round(done.length / state.items.length * 100) : 0;
 
-  document.getElementById("pbarFill").style.width  = pct + "%";
+  document.getElementById("pbarFill").style.width = pct + "%";
   document.getElementById("pbarLabel").textContent = done.length + " de " + state.items.length + " regalos cubiertos (" + pct + "%)";
 
   renderSuggestions();
@@ -373,35 +359,35 @@ function render() {
       '<span style="font-size:20px">' + item.emoji + '</span>' +
       '<span class="done-name">' + esc(item.name) + '</span>' +
       '<span style="font-size:16px">✅</span>' +
-      (API_KEY ? '<button class="btn-remove" onclick="removeItem(\'' + item.id + '\')" title="Eliminar">✕</button>' : '');
+      (isOwner ? '<button class="btn-remove" onclick="removeItem(\'' + item.id + '\')" title="Eliminar">✕</button>' : '');
     doneList.appendChild(d);
   });
 }
 
 function renderLinkArea(item) {
-  var isOwner = !!API_KEY;
+  var isOwner = !!(API_KEY && BIN_ID);
   if (isOwner && editingLinkId === item.id) {
     return '<span class="inline-link-form">' +
-      '<input id="linkInput-' + item.id + '" value="' + esc(item.link||'') + '" placeholder="https://…" onkeydown="handleLinkKey(event,\'' + item.id + '\')" />' +
+      '<input id="linkInput-' + item.id + '" value="' + esc(item.link || '') + '" placeholder="https://..." onkeydown="handleLinkKey(event,\'' + item.id + '\')" />' +
       '<button class="btn-ok" onclick="saveLink(\'' + item.id + '\')">OK</button>' +
-      '<button class="btn-cancel" onclick="cancelLink()">✕</button>' +
+      '<button class="btn-cancel" onclick="cancelLink()">X</button>' +
     '</span>';
   }
   if (item.link) {
     var href  = ensureHttp(item.link);
     var label = shortenUrl(item.link);
     return '<a class="link-chip" href="' + href + '" target="_blank" rel="noreferrer">🛍️ ' + esc(label) + '</a>' +
-      (isOwner ? '<button class="add-link-btn" onclick="startEditLink(\'' + item.id + '\')">✏️</button>' : '');
+      (isOwner ? ' <button class="add-link-btn" onclick="startEditLink(\'' + item.id + '\')">✏️</button>' : '');
   }
   return isOwner ? '<button class="add-link-btn" onclick="startEditLink(\'' + item.id + '\')">+ link de compra</button>' : '';
 }
 
 function renderSuggestions() {
   var panel = document.getElementById("suggPanel");
-  if (!state.suggestions || state.suggestions.length === 0) { panel.style.display="none"; return; }
-  if (!API_KEY) { panel.style.display="none"; return; }
+  var isOwner = !!(API_KEY && BIN_ID);
+  if (!isOwner || !state.suggestions || state.suggestions.length === 0) { panel.style.display = "none"; return; }
   panel.style.display = "block";
-  var html = '<div class="sugg-panel"><p class="sugg-title">✨ Sugerencias de invitados (' + state.suggestions.length + ')</p>';
+  var html = '<div class="sugg-panel"><p class="sugg-title">Sugerencias de invitados (' + state.suggestions.length + ')</p>';
   state.suggestions.forEach(function(s) {
     html += '<div class="sugg-card">' +
       '<div class="sugg-body">' +
@@ -410,8 +396,8 @@ function renderSuggestions() {
         (s.link ? '<a class="link-chip" href="' + ensureHttp(s.link) + '" target="_blank" rel="noreferrer" style="margin-top:4px;display:inline-flex">🔗 ' + esc(shortenUrl(s.link)) + '</a>' : '') +
       '</div>' +
       '<div class="sugg-actions">' +
-        '<button class="btn-approve" onclick="approveSuggestion(\'' + s.id + '\')">✓ Agregar</button>' +
-        '<button class="btn-reject"  onclick="rejectSuggestion(\'' + s.id + '\')">✕</button>' +
+        '<button class="btn-approve" onclick="approveSuggestion(\'' + s.id + '\')">Agregar</button>' +
+        '<button class="btn-reject"  onclick="rejectSuggestion(\'' + s.id + '\')">X</button>' +
       '</div>' +
     '</div>';
   });
@@ -428,7 +414,7 @@ async function claimItem(id) {
 }
 
 async function removeItem(id) {
-  state.items = state.items.filter(function(i){ return i.id !== id; });
+  state.items = state.items.filter(function(i) { return i.id !== id; });
   delete state.claimed[id];
   render();
   await saveRemote();
@@ -451,23 +437,23 @@ function handleLinkKey(e, id) {
 async function saveLink(id) {
   var inp = document.getElementById("linkInput-" + id);
   var val = inp ? inp.value.trim() : "";
-  state.items = state.items.map(function(i){ return i.id === id ? Object.assign({}, i, {link: val}) : i; });
+  state.items = state.items.map(function(i) { return i.id === id ? Object.assign({}, i, {link: val}) : i; });
   editingLinkId = null;
   render();
   await saveRemote();
 }
 
 async function approveSuggestion(id) {
-  var s = state.suggestions.find(function(x){ return x.id === id; });
+  var s = state.suggestions.find(function(x) { return x.id === id; });
   if (!s) return;
-  state.items.push({ id: Date.now().toString(), name: s.name, emoji:"🎁", category:"Sugerencia", link: s.link||"" });
-  state.suggestions = state.suggestions.filter(function(x){ return x.id !== id; });
+  state.items.push({ id: Date.now().toString(), name: s.name, emoji: "🎁", category: "Sugerencia", link: s.link || "" });
+  state.suggestions = state.suggestions.filter(function(x) { return x.id !== id; });
   render();
   await saveRemote();
 }
 
 async function rejectSuggestion(id) {
-  state.suggestions = state.suggestions.filter(function(x){ return x.id !== id; });
+  state.suggestions = state.suggestions.filter(function(x) { return x.id !== id; });
   render();
   await saveRemote();
 }
@@ -478,9 +464,9 @@ function openModal(type) {
   if (type === "owner") {
     box.innerHTML =
       '<h2 style="color:#1d4ed8">Agregar articulo</h2>' +
-      '<p class="sub">Agrega el link para que los invitados sepan exactamente que comprar.</p>' +
-      '<input  class="field" id="mName" placeholder="Nombre del articulo *" onkeydown="if(event.key===\'Enter\')ownerAdd()"/>' +
-      '<input  class="field" id="mLink" placeholder="Link de compra — Amazon, Mercado Libre, etc. (opcional)"/>' +
+      '<p class="sub">Agrega el link para que los invitados sepan que comprar.</p>' +
+      '<input class="field" id="mName" placeholder="Nombre del articulo *" onkeydown="if(event.key===\'Enter\')ownerAdd()"/>' +
+      '<input class="field" id="mLink" placeholder="Link de compra (opcional)"/>' +
       '<div class="modal-row">' +
         '<button class="btn-primary" onclick="ownerAdd()">Agregar a la lista</button>' +
         '<button class="btn-secondary" onclick="closeModal()">Cancelar</button>' +
@@ -489,16 +475,16 @@ function openModal(type) {
     box.innerHTML =
       '<h2 style="color:#4338ca">Sugerir un regalo</h2>' +
       '<p class="sub">Tu sugerencia sera revisada antes de aparecer en la lista.</p>' +
-      '<input    class="field" id="mName" placeholder="Que regalo sugieres? *" onkeydown="if(event.key===\'Enter\')guestSuggest()"/>' +
-      '<input    class="field" id="mLink" placeholder="Link de referencia (opcional)"/>' +
+      '<input class="field" id="mName" placeholder="Que regalo sugieres? *" onkeydown="if(event.key===\'Enter\')guestSuggest()"/>' +
+      '<input class="field" id="mLink" placeholder="Link de referencia (opcional)"/>' +
       '<textarea class="field" id="mNote" placeholder="Nota - talla, color, marca... (opcional)"></textarea>' +
       '<div class="modal-row">' +
-        '<button class="btn-primary purple" onclick="guestSuggest()">Enviar sugerencia</button>' +
+        '<button class="btn-primary indigo" onclick="guestSuggest()">Enviar sugerencia</button>' +
         '<button class="btn-secondary" onclick="closeModal()">Cancelar</button>' +
       '</div>';
   }
   document.getElementById("overlay").classList.remove("hidden");
-  setTimeout(function(){ var el = document.getElementById("mName"); if(el) el.focus(); }, 50);
+  setTimeout(function() { var el = document.getElementById("mName"); if (el) el.focus(); }, 50);
 }
 
 function closeModal() { document.getElementById("overlay").classList.add("hidden"); }
@@ -508,7 +494,7 @@ async function ownerAdd() {
   var name = document.getElementById("mName").value.trim();
   var link = document.getElementById("mLink").value.trim();
   if (!name) { document.getElementById("mName").focus(); return; }
-  state.items.push({ id: Date.now().toString(), name: name, emoji:"🎁", category:"Extra", link: link });
+  state.items.push({ id: Date.now().toString(), name: name, emoji: "🎁", category: "Extra", link: link });
   closeModal();
   render();
   await saveRemote();
@@ -520,7 +506,7 @@ async function guestSuggest() {
   var note = document.getElementById("mNote").value.trim();
   if (!name) { document.getElementById("mName").focus(); return; }
   if (!state.suggestions) state.suggestions = [];
-  state.suggestions.push({ id:"s-"+Date.now(), name:name, note:note, link:link });
+  state.suggestions.push({ id: "s-" + Date.now(), name: name, note: note, link: link });
   closeModal();
   render();
   await saveRemote();
@@ -529,20 +515,20 @@ async function guestSuggest() {
 // ── Confetti ──
 function triggerConfetti() {
   var colors = ["#93c5fd","#bfdbfe","#60a5fa","#a5b4fc","#6ee7b7","#fde68a"];
-  for (var i=0; i<20; i++) {
+  for (var i = 0; i < 20; i++) {
     var el = document.createElement("div");
     el.className = "confetti-piece";
-    var size = 7 + Math.random()*9;
-    el.style.cssText = "left:"+(25+Math.random()*50)+"%;top:"+(30+Math.random()*30)+"%;width:"+size+"px;height:"+size+"px;background:"+colors[i%6]+";transform:rotate("+(Math.random()*360)+"deg);";
+    var size = 7 + Math.random() * 9;
+    el.style.cssText = "left:" + (25 + Math.random()*50) + "%;top:" + (30 + Math.random()*30) + "%;width:" + size + "px;height:" + size + "px;background:" + colors[i%6] + ";transform:rotate(" + (Math.random()*360) + "deg);";
     document.body.appendChild(el);
-    setTimeout(function(){ el.remove(); }, 1900);
+    (function(elem) { setTimeout(function() { elem.remove(); }, 1900); })(el);
   }
 }
 
 // ── Utils ──
-function ensureHttp(url) { return url.startsWith("http") ? url : "https://"+url; }
-function shortenUrl(url) { try { return new URL(ensureHttp(url)).hostname.replace("www.",""); } catch(e) { return url; } }
-function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function ensureHttp(url) { return url.startsWith("http") ? url : "https://" + url; }
+function shortenUrl(url) { try { return new URL(ensureHttp(url)).hostname.replace("www.", ""); } catch(e) { return url; } }
+function esc(s) { return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 </script>
 </body>
 </html>
