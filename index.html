@@ -7,90 +7,59 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-  body {
-    min-height:100vh;
-    background:linear-gradient(135deg,#e0f2fe 0%,#f0f9ff 50%,#dbeafe 100%);
-    font-family:'Lato',sans-serif;
-    color:#1e3a5f;
-    position:relative;
-    overflow-x:hidden;
-  }
+  body { min-height:100vh; background:linear-gradient(135deg,#e0f2fe 0%,#f0f9ff 50%,#dbeafe 100%); font-family:'Lato',sans-serif; color:#1e3a5f; position:relative; overflow-x:hidden; }
   body::before,body::after { content:'';position:fixed;border-radius:50%;pointer-events:none;z-index:0; }
   body::before { top:-80px;left:-80px;width:300px;height:300px;background:radial-gradient(circle,#bae6fd,transparent 70%); }
   body::after  { bottom:-60px;right:-60px;width:260px;height:260px;background:radial-gradient(circle,#93c5fd,transparent 70%); }
-
   .container { max-width:640px;margin:0 auto;padding:32px 16px 80px;position:relative;z-index:1; }
-
   .header { text-align:center;margin-bottom:28px; }
   .header .emoji-row { font-size:52px;margin-bottom:8px; }
   .header h1 { font-family:'Playfair Display',serif;font-size:clamp(1.6rem,5vw,2.4rem);color:#1d4ed8;letter-spacing:-0.5px; }
-  .header p  { margin-top:8px;color:#1e40af;font-size:.93rem;font-style:italic;line-height:1.5; }
+  .header p { margin-top:8px;color:#1e40af;font-size:.93rem;font-style:italic;line-height:1.5; }
   .header p span { font-size:.8rem;color:#60a5fa; }
-
   .pbar-wrap { margin-top:18px;background:#bfdbfe;border-radius:999px;height:10px;overflow:hidden; }
-  .pbar-fill  { height:100%;background:linear-gradient(90deg,#3b82f6,#6366f1);border-radius:999px;transition:width .8s cubic-bezier(.4,0,.2,1); }
+  .pbar-fill { height:100%;background:linear-gradient(90deg,#3b82f6,#6366f1);border-radius:999px;transition:width .8s cubic-bezier(.4,0,.2,1); }
   .pbar-label { margin-top:6px;font-size:.8rem;color:#1d4ed8;text-align:center; }
-
   .list { display:flex;flex-direction:column;gap:10px; }
-  .card {
-    background:rgba(255,255,255,.9);border-radius:16px;padding:14px 16px;
-    display:flex;align-items:center;gap:12px;
-    box-shadow:0 2px 12px rgba(29,78,216,.1);
-    border:1.5px solid rgba(96,165,250,.3);
-    transition:box-shadow .2s,transform .15s;
-    animation:fadeIn .35s ease both;
-  }
+  .card { background:rgba(255,255,255,.9);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 12px rgba(29,78,216,.1);border:1.5px solid rgba(96,165,250,.3);transition:box-shadow .2s,transform .15s;animation:fadeIn .35s ease both; }
   .card:hover { box-shadow:0 6px 24px rgba(0,0,0,.1);transform:translateY(-2px); }
   .card-emoji { font-size:26px;flex-shrink:0; }
-  .card-body  { flex:1;min-width:0; }
-  .card-name  { font-weight:700;font-size:.97rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-  .card-meta  { display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap; }
+  .card-body { flex:1;min-width:0; }
+  .card-name { font-weight:700;font-size:.97rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+  .card-meta { display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap; }
   .tag { display:inline-block;padding:2px 8px;border-radius:99px;font-size:.7rem;font-weight:700;background:#eff6ff;color:#1d4ed8;border:1px solid #93c5fd; }
   .link-chip { display:inline-flex;align-items:center;gap:4px;background:#eff6ff;border:1.5px solid #60a5fa;border-radius:8px;padding:3px 9px;font-size:.73rem;color:#1d4ed8;text-decoration:none;transition:background .15s; }
   .link-chip:hover { background:#dbeafe; }
-  .add-link-btn { background:none;border:1.5px dashed #93c5fd;border-radius:8px;padding:3px 9px;font-size:.73rem;color:#60a5fa;cursor:pointer;font-family:inherit;transition:border-color .15s,color .15s; }
+  .add-link-btn { background:none;border:1.5px dashed #93c5fd;border-radius:8px;padding:3px 9px;font-size:.73rem;color:#60a5fa;cursor:pointer;font-family:inherit; }
   .add-link-btn:hover { border-color:#3b82f6;color:#1d4ed8; }
   .inline-link-form { display:flex;gap:4px;align-items:center;flex-wrap:wrap; }
   .inline-link-form input { width:170px;padding:3px 8px;font-size:.76rem;border-radius:8px;border:1.5px solid #60a5fa;background:#f0f9ff;font-family:inherit;outline:none; }
-  .btn-ok     { background:#3b82f6;border:none;border-radius:7px;padding:4px 10px;color:white;font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit; }
+  .btn-ok { background:#3b82f6;border:none;border-radius:7px;padding:4px 10px;color:white;font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit; }
   .btn-cancel { background:#f3f4f6;border:none;border-radius:7px;padding:4px 9px;color:#6b7280;font-size:.74rem;cursor:pointer;font-family:inherit; }
-
-  .btn-claim {
-    background:linear-gradient(135deg,#60a5fa,#3b82f6);
-    border:none;border-radius:10px;padding:8px 13px;
-    color:#fff;font-weight:700;font-size:.8rem;
-    cursor:pointer;white-space:nowrap;flex-shrink:0;
-    font-family:inherit;transition:transform .15s;
-  }
-  .btn-claim:hover  { transform:scale(1.05); }
+  .btn-claim { background:linear-gradient(135deg,#60a5fa,#3b82f6);border:none;border-radius:10px;padding:8px 13px;color:#fff;font-weight:700;font-size:.8rem;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit;transition:transform .15s; }
+  .btn-claim:hover { transform:scale(1.05); }
   .btn-claim:active { transform:scale(.97); }
-
   .empty { text-align:center;padding:48px 0;color:#1d4ed8; }
   .empty .big { font-size:48px; }
-
   .add-row { display:flex;gap:10px;margin-top:20px; }
   .btn-add,.btn-suggest { flex:1;background:transparent;border-radius:14px;padding:12px;font-family:inherit;font-size:.87rem;cursor:pointer;transition:background .15s; }
-  .btn-add     { border:2px dashed #93c5fd;color:#1d4ed8; }
+  .btn-add { border:2px dashed #93c5fd;color:#1d4ed8; }
   .btn-suggest { border:2px dashed #a5b4fc;color:#4338ca; }
-  .btn-add:hover     { background:rgba(147,197,253,.15); }
+  .btn-add:hover { background:rgba(147,197,253,.15); }
   .btn-suggest:hover { background:rgba(165,180,252,.15); }
-
   .done-title { color:#93c5fd;font-size:.78rem;text-align:center;letter-spacing:2px;text-transform:uppercase;margin:32px 0 10px; }
   .done-card { background:rgba(255,255,255,.4);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;opacity:.55;margin-bottom:6px; }
   .done-card .done-name { flex:1;text-decoration:line-through;color:#9ca3af;font-size:.88rem; }
   .btn-remove { background:none;border:none;cursor:pointer;color:#93c5fd;font-size:13px;padding:2px 4px; }
-
   .sugg-panel { background:#eff6ff;border:2px solid #bfdbfe;border-radius:16px;padding:14px 16px;margin-bottom:20px; }
   .sugg-title { font-weight:700;color:#1d4ed8;font-size:.88rem;margin-bottom:10px; }
-  .sugg-card  { background:white;border-radius:12px;padding:10px 12px;display:flex;align-items:flex-start;gap:10px;margin-bottom:8px; }
-  .sugg-card:last-child { margin-bottom:0; }
-  .sugg-body  { flex:1;min-width:0; }
-  .sugg-name  { font-weight:700;font-size:.9rem; }
-  .sugg-note  { font-size:.75rem;color:#6b7280;font-style:italic;margin-top:2px; }
+  .sugg-card { background:white;border-radius:12px;padding:10px 12px;display:flex;align-items:flex-start;gap:10px;margin-bottom:8px; }
+  .sugg-body { flex:1;min-width:0; }
+  .sugg-name { font-weight:700;font-size:.9rem; }
+  .sugg-note { font-size:.75rem;color:#6b7280;font-style:italic;margin-top:2px; }
   .sugg-actions { display:flex;gap:6px;flex-shrink:0; }
   .btn-approve { background:#d1fae5;border:none;border-radius:8px;padding:5px 10px;color:#065f46;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit; }
-  .btn-reject  { background:#fee2e2;border:none;border-radius:8px;padding:5px 10px;color:#991b1b;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit; }
-
+  .btn-reject { background:#fee2e2;border:none;border-radius:8px;padding:5px 10px;color:#991b1b;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit; }
   .overlay { position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px; }
   .overlay.hidden { display:none; }
   .modal { background:#fff;border-radius:20px;padding:28px 24px;width:100%;max-width:420px;animation:slideUp .25s ease; }
@@ -103,38 +72,27 @@
   .btn-primary { flex:1;background:linear-gradient(135deg,#3b82f6,#6366f1);border:none;border-radius:12px;padding:11px;color:white;font-weight:700;cursor:pointer;font-family:inherit;font-size:.9rem; }
   .btn-primary.indigo { background:linear-gradient(135deg,#6366f1,#818cf8); }
   .btn-secondary { background:#f3f4f6;border:none;border-radius:12px;padding:11px 16px;color:#6b7280;cursor:pointer;font-family:inherit; }
-
-  .setup-banner { background:#fffbeb;border:2px solid #fde68a;border-radius:16px;padding:16px;margin-bottom:24px;font-size:.87rem;color:#92400e;line-height:1.6; }
-  .setup-banner strong { color:#b45309; }
-  .setup-input-row { display:flex;gap:8px;margin-top:10px; }
-  .setup-input-row input { flex:1;border:1.5px solid #fcd34d;border-radius:10px;padding:8px 12px;font-family:inherit;font-size:.87rem;outline:none;background:#fffdf0; }
-  .setup-input-row input:focus { border-color:#f59e0b; }
-  .btn-save-key { background:#f59e0b;border:none;border-radius:10px;padding:8px 16px;color:white;font-weight:700;cursor:pointer;font-family:inherit;font-size:.85rem; }
-
-  .loading { text-align:center;padding:60px 0;font-size:36px;animation:spin 1.2s linear infinite;display:inline-block; }
-  @keyframes spin { to { transform:rotate(360deg); } }
-
-  .confetti-piece { position:fixed;border-radius:2px;pointer-events:none;z-index:999;animation:fall 1.8s ease-out forwards; }
-  @keyframes fall    { 0%{opacity:1;transform:translateY(0) rotate(0deg)} 100%{opacity:0;transform:translateY(130px) rotate(400deg)} }
-  @keyframes fadeIn  { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes slideUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
-
+  .owner-bar { text-align:center;margin-bottom:16px; }
+  .btn-owner-toggle { background:none;border:none;font-size:.78rem;color:#93c5fd;cursor:pointer;text-decoration:underline;font-family:inherit; }
+  .owner-panel { background:#fffbeb;border:2px solid #fde68a;border-radius:14px;padding:14px;margin-bottom:20px;display:none; }
+  .owner-panel input { width:100%;border:1.5px solid #fcd34d;border-radius:10px;padding:8px 12px;font-family:inherit;font-size:.85rem;outline:none;background:#fffdf0;margin-bottom:8px; }
+  .btn-save-key { background:#f59e0b;border:none;border-radius:10px;padding:8px 16px;color:white;font-weight:700;cursor:pointer;font-family:inherit;font-size:.85rem;width:100%; }
+  .owner-active { font-size:.78rem;color:#059669;text-align:center;margin-bottom:12px; }
   .mp-banner { margin:28px auto 8px;max-width:520px;background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);border:2px solid #93c5fd;border-radius:18px;padding:18px 22px;text-align:center; }
   .mp-text { font-size:.88rem;color:#1d4ed8;margin:0 0 10px;line-height:1.5; }
   .mp-link { display:inline-block;background:#009ee3;color:#fff;font-weight:700;font-size:.85rem;padding:10px 20px;border-radius:50px;text-decoration:none;letter-spacing:.02em;transition:opacity .2s; }
   .mp-link:hover { opacity:.85; }
-
   .footer { text-align:center;margin-top:36px;font-size:.74rem;color:#93c5fd; }
+  .loading { font-size:36px;animation:spin 1.2s linear infinite;display:inline-block; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .confetti-piece { position:fixed;border-radius:2px;pointer-events:none;z-index:999;animation:fall 1.8s ease-out forwards; }
+  @keyframes fall    { 0%{opacity:1;transform:translateY(0) rotate(0deg)} 100%{opacity:0;transform:translateY(130px) rotate(400deg)} }
+  @keyframes fadeIn  { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes slideUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
 </style>
 </head>
 <body>
 <div class="container">
-
-  <!-- Banner de estado Firebase -->
-  <div class="setup-banner" id="setupBanner" style="display:none">
-    <strong>⚠️ Error de conexion con Firebase</strong><br/>
-    No se pudo conectar a la base de datos. Recarga la pagina o verifica tu conexion a internet.
-  </div>
 
   <div class="header">
     <div class="emoji-row">⚽👶⚽</div>
@@ -146,6 +104,8 @@
     <div class="pbar-wrap"><div class="pbar-fill" id="pbarFill" style="width:0%"></div></div>
     <p class="pbar-label" id="pbarLabel">Cargando...</p>
   </div>
+
+  <div id="ownerActiveMsg" class="owner-active" style="display:none">✅ Modo administrador activo</div>
 
   <div id="suggPanel" style="display:none"></div>
 
@@ -162,15 +122,15 @@
   </div>
 
   <div class="add-row" id="ownerButtons" style="display:none">
-    <button class="btn-add"     onclick="openModal('owner')">Agregar articulo</button>
-    <button class="btn-suggest" onclick="openModal('guest')">Sugerir regalo</button>
+    <button class="btn-add"     onclick="openModal('owner')">✏️ Agregar articulo</button>
+    <button class="btn-suggest" onclick="openModal('guest')">💡 Sugerir regalo</button>
   </div>
   <div class="add-row" id="guestButtons" style="display:none">
-    <button class="btn-suggest" style="flex:1" onclick="openModal('guest')">Sugerir regalo</button>
+    <button class="btn-suggest" style="flex:1" onclick="openModal('guest')">💡 Sugerir regalo</button>
   </div>
 
   <div id="doneSection" style="display:none">
-    <p class="done-title">Ya cubiertos</p>
+    <p class="done-title">Ya cubiertos ✅</p>
     <div id="doneList"></div>
   </div>
 
@@ -182,6 +142,15 @@
   </div>
 
   <p class="footer">Hecho con amor 💙 · Los cambios se guardan automaticamente</p>
+
+  <div class="owner-bar">
+    <button class="btn-owner-toggle" onclick="toggleOwnerPanel()">⚙️ Acceso administrador</button>
+  </div>
+  <div class="owner-panel" id="ownerPanel">
+    <input type="password" id="ownerPassInput" placeholder="Contrasena de administrador"/>
+    <button class="btn-save-key" onclick="ownerLogin()">Entrar como administrador</button>
+  </div>
+
 </div>
 
 <div class="overlay hidden" id="overlay" onclick="handleOverlayClick(event)">
@@ -189,56 +158,58 @@
 </div>
 
 <script>
-// ── Firebase Realtime Database ──
+// ── Firebase config ──
 var FIREBASE_URL = "https://baby-shower-a5625-default-rtdb.firebaseio.com";
+// Contrasena de administrador - cambiala por una que solo vos conozcas
+var OWNER_PASSWORD = "hector2025";
 
 var DEFAULT_ITEMS = [
-  {id:"1",  name:"Coche/carriola",              emoji:"🛒", category:"Movilidad",  link:""},
-  {id:"2",  name:"Silla de auto (infant)",       emoji:"🚗", category:"Movilidad",  link:""},
-  {id:"3",  name:"Cuna o moises",               emoji:"🛏️", category:"Sueno",      link:""},
-  {id:"4",  name:"Monitor de bebe",             emoji:"📷", category:"Sueno",      link:""},
-  {id:"5",  name:"Ropa 0-3 meses",              emoji:"👶", category:"Ropa",       link:""},
-  {id:"6",  name:"Ropa 3-6 meses",              emoji:"👕", category:"Ropa",       link:""},
-  {id:"7",  name:"Panales talla N",             emoji:"🍼", category:"Higiene",    link:""},
-  {id:"8",  name:"Panales talla 1",             emoji:"🍼", category:"Higiene",    link:""},
-  {id:"9",  name:"Toallitas humedas",           emoji:"🧻", category:"Higiene",    link:""},
-  {id:"10", name:"Bañera de bebe",              emoji:"🛁", category:"Higiene",    link:""},
-  {id:"11", name:"Termometro digital",          emoji:"🌡️", category:"Salud",      link:""},
-  {id:"12", name:"Aspirador nasal",             emoji:"💊", category:"Salud",      link:""},
-  {id:"13", name:"Cobijitas/mantitas",          emoji:"🧸", category:"Confort",    link:""},
-  {id:"14", name:"Chupones/chupetes x3",        emoji:"🎀", category:"Confort",    link:""},
-  {id:"15", name:"Hamaca o columpio",           emoji:"🪑", category:"Confort",    link:""},
-  {id:"16", name:"Bolsa panialera",             emoji:"👜", category:"Accesorios", link:""},
-  {id:"17", name:"Portabebe/cargador",          emoji:"🤱", category:"Accesorios", link:""},
-  {id:"18", name:"Sacaleches electrico",        emoji:"🍼", category:"Lactancia",  link:""},
-  {id:"19", name:"Cojin de lactancia",          emoji:"🛋️", category:"Lactancia",  link:""},
-  {id:"20", name:"Mordillos / juguetes",        emoji:"🧸", category:"Juego",      link:""},
+  {id:"1",  name:"Coche/carriola",        emoji:"🛒", category:"Movilidad",  link:""},
+  {id:"2",  name:"Silla de auto",          emoji:"🚗", category:"Movilidad",  link:""},
+  {id:"3",  name:"Cuna o moises",          emoji:"🛏️", category:"Sueno",      link:""},
+  {id:"4",  name:"Monitor de bebe",        emoji:"📷", category:"Sueno",      link:""},
+  {id:"5",  name:"Ropa 0-3 meses",         emoji:"👶", category:"Ropa",       link:""},
+  {id:"6",  name:"Ropa 3-6 meses",         emoji:"👕", category:"Ropa",       link:""},
+  {id:"7",  name:"Panales talla N",        emoji:"🍼", category:"Higiene",    link:""},
+  {id:"8",  name:"Panales talla 1",        emoji:"🍼", category:"Higiene",    link:""},
+  {id:"9",  name:"Toallitas humedas",      emoji:"🧻", category:"Higiene",    link:""},
+  {id:"10", name:"Banera de bebe",         emoji:"🛁", category:"Higiene",    link:""},
+  {id:"11", name:"Termometro digital",     emoji:"🌡️", category:"Salud",      link:""},
+  {id:"12", name:"Aspirador nasal",        emoji:"💊", category:"Salud",      link:""},
+  {id:"13", name:"Cobijitas/mantitas",     emoji:"🧸", category:"Confort",    link:""},
+  {id:"14", name:"Chupetes x3",            emoji:"🎀", category:"Confort",    link:""},
+  {id:"15", name:"Hamaca o columpio",      emoji:"🪑", category:"Confort",    link:""},
+  {id:"16", name:"Bolsa panialera",        emoji:"👜", category:"Accesorios", link:""},
+  {id:"17", name:"Portabebe",              emoji:"🤱", category:"Accesorios", link:""},
+  {id:"18", name:"Sacaleches electrico",   emoji:"🍼", category:"Lactancia",  link:""},
+  {id:"19", name:"Cojin de lactancia",     emoji:"🛋️", category:"Lactancia",  link:""},
+  {id:"20", name:"Mordillos / juguetes",   emoji:"🧸", category:"Juego",      link:""},
 ];
 
 var state = { items: [], claimed: {}, suggestions: [] };
+var isOwner = false;
 var editingLinkId = null;
-// Detectar si es dueno: ?owner=1 en la URL
-var isOwner = window.location.search.indexOf("owner=1") !== -1;
 
 // ── Firebase REST API ──
 async function loadRemote() {
   try {
-    var res = await fetch(FIREBASE_URL + "/state.json");
+    var res = await fetch(FIREBASE_URL + "/lista.json");
     if (!res.ok) return false;
     var data = await res.json();
-    if (!data) return false;
-    state = {
-      items:       data.items       || DEFAULT_ITEMS,
-      claimed:     data.claimed     || {},
-      suggestions: data.suggestions || []
-    };
+    if (data && data.items) {
+      state = data;
+    } else {
+      // Primera vez - inicializar con items por defecto
+      state = { items: DEFAULT_ITEMS, claimed: {}, suggestions: [] };
+      await saveRemote();
+    }
     return true;
   } catch(e) { return false; }
 }
 
 async function saveRemote() {
   try {
-    await fetch(FIREBASE_URL + "/state.json", {
+    await fetch(FIREBASE_URL + "/lista.json", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(state)
@@ -246,48 +217,37 @@ async function saveRemote() {
   } catch(e) {}
 }
 
-// ── Init ──
-window.addEventListener("DOMContentLoaded", async function() {
-  document.getElementById("setupBanner").style.display = "none";
-  var ok = await loadRemote();
-  if (ok) {
-    // Si Firebase esta vacio, inicializar con items por defecto
-    if (!state.items || state.items.length === 0) {
-      state = { items: DEFAULT_ITEMS, claimed: {}, suggestions: [] };
-      if (isOwner) await saveRemote();
-    }
+// ── Owner login ──
+function toggleOwnerPanel() {
+  var panel = document.getElementById("ownerPanel");
+  panel.style.display = panel.style.display === "none" ? "block" : "none";
+}
+
+function ownerLogin() {
+  var pass = document.getElementById("ownerPassInput").value.trim();
+  if (pass === OWNER_PASSWORD) {
+    isOwner = true;
+    document.getElementById("ownerPanel").style.display = "none";
+    document.getElementById("ownerActiveMsg").style.display = "block";
     render();
   } else {
-    // Fallback a lista local
-    state = { items: DEFAULT_ITEMS, claimed: {}, suggestions: [] };
-    document.getElementById("setupBanner").style.display = "block";
-    render();
+    alert("Contrasena incorrecta.");
   }
-  // Escuchar cambios en tiempo real con polling cada 8 segundos
-  setInterval(async function() {
-    try {
-      var res = await fetch(FIREBASE_URL + "/state.json");
-      if (!res.ok) return;
-      var data = await res.json();
-      if (!data) return;
-      var remote = {
-        items:       data.items       || [],
-        claimed:     data.claimed     || {},
-        suggestions: data.suggestions || []
-      };
-      // Solo re-renderizar si hubo cambios
-      if (JSON.stringify(remote) !== JSON.stringify(state)) {
-        state = remote;
-        render();
-      }
-    } catch(e) {}
-  }, 8000);
+}
+
+// ── Init ──
+window.addEventListener("DOMContentLoaded", async function() {
+  var ok = await loadRemote();
+  if (ok) {
+    render();
+  } else {
+    document.getElementById("loadingState").innerHTML = "<p style='color:#1d4ed8;padding:20px'>Error al cargar. Recarga la pagina.</p>";
+  }
 });
 
 // ── Render ──
 function render() {
   document.getElementById("loadingState").style.display = "none";
-
   document.getElementById("ownerButtons").style.display = isOwner ? "flex" : "none";
   document.getElementById("guestButtons").style.display = isOwner ? "none" : "flex";
 
@@ -358,19 +318,14 @@ function renderSuggestions() {
   var panel = document.getElementById("suggPanel");
   if (!isOwner || !state.suggestions || state.suggestions.length === 0) { panel.style.display = "none"; return; }
   panel.style.display = "block";
-  var html = '<div class="sugg-panel"><p class="sugg-title">Sugerencias de invitados (' + state.suggestions.length + ')</p>';
+  var html = '<div class="sugg-panel"><p class="sugg-title">Sugerencias (' + state.suggestions.length + ')</p>';
   state.suggestions.forEach(function(s) {
-    html += '<div class="sugg-card">' +
-      '<div class="sugg-body">' +
-        '<div class="sugg-name">' + esc(s.name) + '</div>' +
-        (s.note ? '<div class="sugg-note">' + esc(s.note) + '</div>' : '') +
-        (s.link ? '<a class="link-chip" href="' + ensureHttp(s.link) + '" target="_blank" rel="noreferrer" style="margin-top:4px;display:inline-flex">🔗 ' + esc(shortenUrl(s.link)) + '</a>' : '') +
-      '</div>' +
+    html += '<div class="sugg-card"><div class="sugg-body"><div class="sugg-name">' + esc(s.name) + '</div>' +
+      (s.note ? '<div class="sugg-note">' + esc(s.note) + '</div>' : '') + '</div>' +
       '<div class="sugg-actions">' +
         '<button class="btn-approve" onclick="approveSuggestion(\'' + s.id + '\')">Agregar</button>' +
-        '<button class="btn-reject"  onclick="rejectSuggestion(\'' + s.id + '\')">X</button>' +
-      '</div>' +
-    '</div>';
+        '<button class="btn-reject" onclick="rejectSuggestion(\'' + s.id + '\')">X</button>' +
+      '</div></div>';
   });
   html += '</div>';
   panel.innerHTML = html;
@@ -391,19 +346,9 @@ async function removeItem(id) {
   await saveRemote();
 }
 
-function startEditLink(id) {
-  editingLinkId = id;
-  render();
-  var inp = document.getElementById("linkInput-" + id);
-  if (inp) { inp.focus(); inp.select(); }
-}
-
+function startEditLink(id) { editingLinkId = id; render(); var inp = document.getElementById("linkInput-" + id); if (inp) { inp.focus(); inp.select(); } }
 function cancelLink() { editingLinkId = null; render(); }
-
-function handleLinkKey(e, id) {
-  if (e.key === "Enter")  saveLink(id);
-  if (e.key === "Escape") cancelLink();
-}
+function handleLinkKey(e, id) { if (e.key === "Enter") saveLink(id); if (e.key === "Escape") cancelLink(); }
 
 async function saveLink(id) {
   var inp = document.getElementById("linkInput-" + id);
@@ -419,14 +364,12 @@ async function approveSuggestion(id) {
   if (!s) return;
   state.items.push({ id: Date.now().toString(), name: s.name, emoji: "🎁", category: "Sugerencia", link: s.link || "" });
   state.suggestions = state.suggestions.filter(function(x) { return x.id !== id; });
-  render();
-  await saveRemote();
+  render(); await saveRemote();
 }
 
 async function rejectSuggestion(id) {
   state.suggestions = state.suggestions.filter(function(x) { return x.id !== id; });
-  render();
-  await saveRemote();
+  render(); await saveRemote();
 }
 
 // ── Modal ──
@@ -445,10 +388,10 @@ function openModal(type) {
   } else {
     box.innerHTML =
       '<h2 style="color:#4338ca">Sugerir un regalo</h2>' +
-      '<p class="sub">Tu sugerencia sera revisada antes de aparecer en la lista.</p>' +
+      '<p class="sub">Tu sugerencia sera revisada antes de aparecer.</p>' +
       '<input class="field" id="mName" placeholder="Que regalo sugieres? *" onkeydown="if(event.key===\'Enter\')guestSuggest()"/>' +
       '<input class="field" id="mLink" placeholder="Link de referencia (opcional)"/>' +
-      '<textarea class="field" id="mNote" placeholder="Nota - talla, color, marca... (opcional)"></textarea>' +
+      '<textarea class="field" id="mNote" placeholder="Nota - talla, color, marca..."></textarea>' +
       '<div class="modal-row">' +
         '<button class="btn-primary indigo" onclick="guestSuggest()">Enviar sugerencia</button>' +
         '<button class="btn-secondary" onclick="closeModal()">Cancelar</button>' +
@@ -466,9 +409,7 @@ async function ownerAdd() {
   var link = document.getElementById("mLink").value.trim();
   if (!name) { document.getElementById("mName").focus(); return; }
   state.items.push({ id: Date.now().toString(), name: name, emoji: "🎁", category: "Extra", link: link });
-  closeModal();
-  render();
-  await saveRemote();
+  closeModal(); render(); await saveRemote();
 }
 
 async function guestSuggest() {
@@ -478,9 +419,7 @@ async function guestSuggest() {
   if (!name) { document.getElementById("mName").focus(); return; }
   if (!state.suggestions) state.suggestions = [];
   state.suggestions.push({ id: "s-" + Date.now(), name: name, note: note, link: link });
-  closeModal();
-  render();
-  await saveRemote();
+  closeModal(); render(); await saveRemote();
 }
 
 // ── Confetti ──
@@ -490,7 +429,7 @@ function triggerConfetti() {
     var el = document.createElement("div");
     el.className = "confetti-piece";
     var size = 7 + Math.random() * 9;
-    el.style.cssText = "left:" + (25 + Math.random()*50) + "%;top:" + (30 + Math.random()*30) + "%;width:" + size + "px;height:" + size + "px;background:" + colors[i%6] + ";transform:rotate(" + (Math.random()*360) + "deg);";
+    el.style.cssText = "left:" + (25+Math.random()*50) + "%;top:" + (30+Math.random()*30) + "%;width:" + size + "px;height:" + size + "px;background:" + colors[i%6] + ";transform:rotate(" + (Math.random()*360) + "deg);";
     document.body.appendChild(el);
     (function(elem) { setTimeout(function() { elem.remove(); }, 1900); })(el);
   }
@@ -499,7 +438,7 @@ function triggerConfetti() {
 // ── Utils ──
 function ensureHttp(url) { return url.startsWith("http") ? url : "https://" + url; }
 function shortenUrl(url) { try { return new URL(ensureHttp(url)).hostname.replace("www.", ""); } catch(e) { return url; } }
-function esc(s) { return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function esc(s) { return String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 </script>
 </body>
 </html>
