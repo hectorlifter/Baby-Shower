@@ -130,17 +130,10 @@
 <body>
 <div class="container">
 
-  <!-- Banner de configuracion (solo para el dueno) -->
+  <!-- Banner de estado Firebase -->
   <div class="setup-banner" id="setupBanner" style="display:none">
-    <strong>Configuracion inicial (solo vos necesitas hacer esto una vez)</strong><br/>
-    Para que la lista se comparta con todos, necesitas una clave gratuita de JSONBin.io:<br/>
-    1. Ve a <a href="https://jsonbin.io" target="_blank"><strong>jsonbin.io</strong></a> - crea cuenta gratis<br/>
-    2. Copia tu <strong>Master Key</strong> (en "API Keys")<br/>
-    3. Pegala abajo y hace clic en "Guardar y conectar":
-    <div class="setup-input-row">
-      <input type="password" id="apiKeyInput" placeholder="Tu master key de JSONBin..."/>
-      <button class="btn-save-key" onclick="saveApiKey()">Guardar y conectar</button>
-    </div>
+    <strong>⚠️ Error de conexion con Firebase</strong><br/>
+    No se pudo conectar a la base de datos. Recarga la pagina o verifica tu conexion a internet.
   </div>
 
   <div class="header">
@@ -196,9 +189,8 @@
 </div>
 
 <script>
-// ── Configuracion: pega aqui tu BIN_ID y API_KEY ──
-// Estos valores se cargan desde localStorage si ya fueron guardados.
-// Los invitados NO necesitan configurar nada - la pagina carga sola.
+// ── Firebase Realtime Database ──
+var FIREBASE_URL = "https://baby-shower-a5625-default-rtdb.firebaseio.com";
 
 var DEFAULT_ITEMS = [
   {id:"1",  name:"Coche/carriola",              emoji:"🛒", category:"Movilidad",  link:""},
@@ -224,97 +216,78 @@ var DEFAULT_ITEMS = [
 ];
 
 var state = { items: [], claimed: {}, suggestions: [] };
-var BIN_ID  = localStorage.getItem("bs_bin_id")  || "6a0cd97b6877513b279ce96d";
-var API_KEY = localStorage.getItem("bs_api_key") || "";
 var editingLinkId = null;
+// Detectar si es dueno: ?owner=1 en la URL
+var isOwner = window.location.search.indexOf("owner=1") !== -1;
 
-// ── JSONBin ──
+// ── Firebase REST API ──
 async function loadRemote() {
-  if (!API_KEY || !BIN_ID) return false;
   try {
-    var res = await fetch("https://api.jsonbin.io/v3/b/" + BIN_ID + "/latest", {
-      headers: { "X-Master-Key": API_KEY }
-    });
+    var res = await fetch(FIREBASE_URL + "/state.json");
     if (!res.ok) return false;
     var data = await res.json();
-    state = data.record;
+    if (!data) return false;
+    state = {
+      items:       data.items       || DEFAULT_ITEMS,
+      claimed:     data.claimed     || {},
+      suggestions: data.suggestions || []
+    };
     return true;
   } catch(e) { return false; }
 }
 
 async function saveRemote() {
-  if (!API_KEY || !BIN_ID) return;
   try {
-    await fetch("https://api.jsonbin.io/v3/b/" + BIN_ID, {
+    await fetch(FIREBASE_URL + "/state.json", {
       method: "PUT",
-      headers: { "Content-Type": "application/json", "X-Master-Key": API_KEY },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(state)
     });
   } catch(e) {}
 }
 
-// ── Setup (solo dueno) ──
-async function saveApiKey() {
-  var val = document.getElementById("apiKeyInput").value.trim();
-  if (!val) { alert("Por favor pega tu Master Key de JSONBin."); return; }
-  API_KEY = val;
-  BIN_ID = "";
-  localStorage.setItem("bs_api_key", API_KEY);
-  localStorage.removeItem("bs_bin_id");
-  document.getElementById("setupBanner").style.display = "none";
-  document.getElementById("loadingState").style.display = "block";
-  // Crear nuevo bin
-  try {
-    var res = await fetch("https://api.jsonbin.io/v3/b", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Master-Key": API_KEY, "X-Bin-Name": "baby-shower" },
-      body: JSON.stringify({ items: DEFAULT_ITEMS, claimed: {}, suggestions: [] })
-    });
-    var data = await res.json();
-    if (!data.metadata || !data.metadata.id) {
-      alert("No se pudo conectar. Verifica tu Master Key.");
-      document.getElementById("setupBanner").style.display = "block";
-      return;
-    }
-    BIN_ID = data.metadata.id;
-    localStorage.setItem("bs_bin_id", BIN_ID);
-    state = data.record;
-    render();
-  } catch(e) {
-    alert("Error de conexion. Verifica tu Master Key.");
-    document.getElementById("setupBanner").style.display = "block";
-  }
-}
-
 // ── Init ──
 window.addEventListener("DOMContentLoaded", async function() {
-  if (API_KEY && BIN_ID) {
-    // Usuario conocido (dueno o invitado que ya tiene datos en cache)
-    document.getElementById("setupBanner").style.display = "none";
-    var ok = await loadRemote();
-    if (ok) {
-      render();
-    } else {
-      document.getElementById("loadingState").innerHTML = "<p style='color:#1d4ed8;padding:20px'>Error al cargar. Recarga la pagina.</p>";
+  document.getElementById("setupBanner").style.display = "none";
+  var ok = await loadRemote();
+  if (ok) {
+    // Si Firebase esta vacio, inicializar con items por defecto
+    if (!state.items || state.items.length === 0) {
+      state = { items: DEFAULT_ITEMS, claimed: {}, suggestions: [] };
+      if (isOwner) await saveRemote();
     }
-  } else if (API_KEY && !BIN_ID) {
-    // Tiene key pero no bin - mostrar setup
-    document.getElementById("loadingState").style.display = "none";
-    document.getElementById("setupBanner").style.display = "block";
+    render();
   } else {
-    // Invitado sin configuracion - mostrar lista de demo
-    document.getElementById("loadingState").style.display = "none";
-    document.getElementById("setupBanner").style.display = "none";
+    // Fallback a lista local
     state = { items: DEFAULT_ITEMS, claimed: {}, suggestions: [] };
+    document.getElementById("setupBanner").style.display = "block";
     render();
   }
+  // Escuchar cambios en tiempo real con polling cada 8 segundos
+  setInterval(async function() {
+    try {
+      var res = await fetch(FIREBASE_URL + "/state.json");
+      if (!res.ok) return;
+      var data = await res.json();
+      if (!data) return;
+      var remote = {
+        items:       data.items       || [],
+        claimed:     data.claimed     || {},
+        suggestions: data.suggestions || []
+      };
+      // Solo re-renderizar si hubo cambios
+      if (JSON.stringify(remote) !== JSON.stringify(state)) {
+        state = remote;
+        render();
+      }
+    } catch(e) {}
+  }, 8000);
 });
 
 // ── Render ──
 function render() {
   document.getElementById("loadingState").style.display = "none";
 
-  var isOwner = !!(API_KEY && BIN_ID);
   document.getElementById("ownerButtons").style.display = isOwner ? "flex" : "none";
   document.getElementById("guestButtons").style.display = isOwner ? "none" : "flex";
 
@@ -365,7 +338,6 @@ function render() {
 }
 
 function renderLinkArea(item) {
-  var isOwner = !!(API_KEY && BIN_ID);
   if (isOwner && editingLinkId === item.id) {
     return '<span class="inline-link-form">' +
       '<input id="linkInput-' + item.id + '" value="' + esc(item.link || '') + '" placeholder="https://..." onkeydown="handleLinkKey(event,\'' + item.id + '\')" />' +
@@ -384,7 +356,6 @@ function renderLinkArea(item) {
 
 function renderSuggestions() {
   var panel = document.getElementById("suggPanel");
-  var isOwner = !!(API_KEY && BIN_ID);
   if (!isOwner || !state.suggestions || state.suggestions.length === 0) { panel.style.display = "none"; return; }
   panel.style.display = "block";
   var html = '<div class="sugg-panel"><p class="sugg-title">Sugerencias de invitados (' + state.suggestions.length + ')</p>';
