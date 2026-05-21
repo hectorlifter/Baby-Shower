@@ -202,6 +202,16 @@ async function loadRemote() {
       if (!Array.isArray(state.items)) {
         state.items = Object.values(state.items);
       }
+      // Normalizar campos para evitar null/undefined
+      state.items = state.items.map(function(i) {
+        return {
+          id: String(i.id || ''),
+          name: String(i.name || ''),
+          emoji: String(i.emoji || '🎁'),
+          category: String(i.category || ''),
+          link: String(i.link || '')
+        };
+      });
       if (!state.claimed) state.claimed = {};
       if (!state.suggestions) state.suggestions = [];
     } else {
@@ -294,9 +304,18 @@ function render() {
   done.forEach(function(item) {
     var d = document.createElement("div");
     d.className = "done-card";
+    var linkHtml = '';
+    if (item.link) {
+      var href = ensureHttp(item.link);
+      var label = shortenUrl(item.link);
+      linkHtml = ' <a class="link-chip" href="' + href + '" target="_blank" rel="noreferrer" style="opacity:.7">🛍️ ' + esc(label) + '</a>';
+    }
     d.innerHTML =
       '<span style="font-size:20px">' + item.emoji + '</span>' +
-      '<span class="done-name">' + esc(item.name) + '</span>' +
+      '<div style="flex:1;min-width:0">' +
+        '<span class="done-name">' + esc(item.name) + '</span>' +
+        linkHtml +
+      '</div>' +
       '<span style="font-size:16px">✅</span>' +
       (isOwner ? '<button class="btn-remove" onclick="removeItem(\'' + item.id + '\')" title="Eliminar">✕</button>' : '');
     doneList.appendChild(d);
@@ -314,6 +333,7 @@ function renderLinkArea(item) {
   if (item.link) {
     var href  = ensureHttp(item.link);
     var label = shortenUrl(item.link);
+    // Link visible para todos, boton de editar solo para owner
     return '<a class="link-chip" href="' + href + '" target="_blank" rel="noreferrer">🛍️ ' + esc(label) + '</a>' +
       (isOwner ? ' <button class="add-link-btn" onclick="startEditLink(\'' + item.id + '\')">✏️</button>' : '');
   }
