@@ -198,6 +198,12 @@ async function loadRemote() {
     var data = await res.json();
     if (data && data.items) {
       state = data;
+      // Firebase puede devolver items como objeto en lugar de array
+      if (!Array.isArray(state.items)) {
+        state.items = Object.values(state.items);
+      }
+      if (!state.claimed) state.claimed = {};
+      if (!state.suggestions) state.suggestions = [];
     } else {
       // Primera vez - inicializar con items por defecto
       state = { items: DEFAULT_ITEMS, claimed: {}, suggestions: [] };
